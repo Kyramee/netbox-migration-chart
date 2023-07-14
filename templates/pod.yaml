@@ -13,7 +13,7 @@ spec:
       type: RuntimeDefault
   containers:
     - name: fetch-data
-      image: image-registry.openshift-image-registry.svc:5000/test2/netbox-migration-imagestream:latest
+      image: image-registry.openshift-image-registry.svc:5000/test-migration/netbox-migration-imagestream:latest
       imagePullPolicy: Always
       command:
         - 'bin/sh'
