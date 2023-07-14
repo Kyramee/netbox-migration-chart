@@ -1,0 +1,19 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: netbox-migration
+  labels:
+    app: netbox-migration
+immutable: true
+data:
+  entrypoint.sh: |
+    ssh -F /migration/configmap/config netbox "pg_dump -U dump_user -d netbox > netbox.sql"
+    scp -F /migration/configmap/config netbox:netbox.sql /migration/data/netbox.sql
+    ssh -F /migration/configmap/config netbox "rm netbox.sql"
+  config: |
+    Host netbox
+      Hostname {{ .Values.configMap.hostname | quote }}
+      User {{ .Values.configMap.user | quote }}
+      IdentityFile /migration/secret/id_rsa
+      UserKnownHostsFile /migration/configmap/known_hosts
+  known_hosts: {{ .Values.configMap.known_hosts | quote }}
