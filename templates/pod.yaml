@@ -7,6 +7,7 @@ metadata:
   annotations:
     alpha.image.policy.openshift.io/resolve-names: '*'
 spec:
+  restartPolicy: OnFailure
   securityContext:
     runAsNonRoot: true
     seccompProfile:
