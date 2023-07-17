@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: netbox-migration
+  name: {{ .Release.Name | trunc 63 | trimSuffix "-"}}-netbox-migration
   labels:
     app: netbox-migration
 spec:
