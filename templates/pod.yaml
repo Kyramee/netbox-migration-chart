@@ -4,8 +4,6 @@ metadata:
   name: netbox-migration
   labels:
     app: netbox-migration
-  annotations:
-    alpha.image.policy.openshift.io/resolve-names: '*'
 spec:
   restartPolicy: OnFailure
   securityContext:
@@ -21,10 +19,6 @@ spec:
         - '-c'
         - '/migration/configmap/entrypoint.sh'
       volumeMounts:
-        - name: migration-secret
-          mountPath: "/migration/secret/"
-        - name: migration-configmap
-          mountPath: "/migration/configmap/"
         - name: migration-data
           mountPath: "/migration/data/"
       resources:
@@ -32,14 +26,6 @@ spec:
           memory: "500Mi"
           cpu: "500m"
   volumes:
-    - name: migration-secret
-      secret:
-        secretName: netbox-migration
-        defaultMode: 0600
-    - name: migration-configmap
-      configMap:
-        name: netbox-migration
-        defaultMode: 0710
     - name: migration-data
       persistentVolumeClaim:
         claimName: netbox-migration
