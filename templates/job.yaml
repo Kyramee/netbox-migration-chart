@@ -9,7 +9,7 @@ spec:
     metadata:
       name: pi
     spec:
-      serviceAccount: netbox-migration
+      serviceAccount: '{{ .Release.Namespace }}-serviceaccount'
       restartPolicy: OnFailure
       containers:
         - name: fetch-data
