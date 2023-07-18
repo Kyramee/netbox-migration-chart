@@ -30,4 +30,3 @@ spec:
     - name: migration-data
       persistentVolumeClaim:
         claimName: netbox-migration
-        defaultMode: 0644
