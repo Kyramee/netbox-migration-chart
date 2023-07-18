@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: '{{ .Release.Namespace }}-job'
+  namespace: adrien-test
+spec:
+  selector: {}
+  template:
+    metadata:
+      name: pi
+    spec:
+      serviceAccount: netbox-migration
+      restartPolicy: OnFailure
+      containers:
+        - name: fetch-data
+          image: image-registry.openshift-image-registry.svc:5000/netbox-migration/netbox-migration:latest
+          imagePullPolicy: Always
+          command:
+            - 'bin/sh'
+            - '-c'
+            - '/migration/configmap/entrypoint.sh'
+          volumeMounts:
+            - name: migration-data
+              mountPath: "/migration/data/"
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+      volumes:
+        - name: migration-data
+          persistentVolumeClaim:
+            claimName: netbox-migration

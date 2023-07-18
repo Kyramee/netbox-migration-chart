@@ -10,7 +10,7 @@ metadata:
     "helm.sh/hook-weight": "-10"
 subjects:
   - kind: ServiceAccount
-    name: netbox-migration
+    name: '{{ .Release.Namespace }}-serviceaccount'
     namespace: {{ .Release.Namespace | quote }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
