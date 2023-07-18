@@ -5,7 +5,7 @@ metadata:
   namespace: netbox-migration
   labels:
     app: '{{ .Release.Namespace }}-netbox-migration'
-    housekeeping: {{ include "migration.housekeeping" . }}
+    housekeeping: {{ include "migration.housekeeping" . | quote}}
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-10"

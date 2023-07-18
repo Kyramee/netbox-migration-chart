@@ -5,7 +5,7 @@ metadata:
   namespace: adrien-test
  labels:
     app: '{{ .Release.Namespace }}-netbox-migration'
-    housekeeping: {{ include "migration.housekeeping" . }}
+    housekeeping: {{ include "migration.housekeeping" . | quote}}
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "10"

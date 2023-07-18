@@ -4,7 +4,7 @@ metadata:
   name: netbox-migration
   labels:
     app: '{{ .Release.Namespace }}-netbox-migration'
-    housekeeping: {{ include "migration.housekeeping" . }}
+    housekeeping: {{ include "migration.housekeeping" . | quote}}
 spec:
   accessModes:
     - {{ .Values.pvc.accessMode | quote }}
