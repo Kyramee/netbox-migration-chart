@@ -1,38 +1,37 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: "batch/v1"
+kind: "Job"
 metadata:
-  name: '{{ .Release.Namespace }}-job'
-  namespace: adrien-test
- labels:
-    app: '{{ .Release.Namespace }}-netbox-migration'
-    housekeeping: {{ include "migration.housekeeping" . | quote}}
+  name: {{ printf "%s-%s" .Release.Namespace "job" | quote }}
+  labels:
+    app: {{ printf "%s-%s" .Release.Namespace "netbox-migration" | quote }}
+    housekeeping: {{ include "migration.housekeeping" . | quote }}
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": "post-install"
     "helm.sh/hook-weight": "10"
 spec:
   selector: {}
   template:
     metadata:
-      name: pi
+      name: "fetch-data"
     spec:
-      serviceAccountName: '{{ .Release.Namespace }}-serviceaccount'
+      serviceAccountName: {{ printf "%s-%s" .Release.Namespace "serviceaccount" | quote }}
       restartPolicy: OnFailure
       containers:
-        - name: fetch-data
-          image: image-registry.openshift-image-registry.svc:5000/netbox-migration/netbox-migration:latest
-          imagePullPolicy: Always
+        - name: "fetch-data"
+          image: "image-registry.openshift-image-registry.svc:5000/netbox-migration/netbox-migration:latest"
+          imagePullPolicy: "Always"
           command:
             - 'bin/sh'
             - '-c'
             - '/migration/configmap/entrypoint.sh'
           volumeMounts:
-            - name: migration-data
+            - name: "migration-data"
               mountPath: "/migration/data/"
           resources:
             limits:
               memory: "500Mi"
               cpu: "500m"
       volumes:
-        - name: migration-data
+        - name: "migration-data"
           persistentVolumeClaim:
-            claimName: netbox-migration
+            claimName: "netbox-migration"

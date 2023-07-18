@@ -1,19 +1,19 @@
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
+kind: "RoleBinding"
+apiVersion: "rbac.authorization.k8s.io/v1"
 metadata:
-  name: '{{ .Release.Namespace }}-image-puller'
-  namespace: netbox-migration
+  name: {{ printf "%s-%s" .Release.Namespace "image-puller" | quote }}
+  namespace: "netbox-migration"
   labels:
-    app: '{{ .Release.Namespace }}-netbox-migration'
-    housekeeping: {{ include "migration.housekeeping" . | quote}}
+    app: {{ printf "%s-%s" .Release.Namespace "netbox-migration" | quote }}
+    housekeeping: {{ include "migration.housekeeping" . | quote }}
   annotations:
-    "helm.sh/hook": pre-install
+    "helm.sh/hook": "pre-install"
     "helm.sh/hook-weight": "-10"
 subjects:
-  - kind: ServiceAccount
-    name: '{{ .Release.Namespace }}-serviceaccount'
+  - kind: "ServiceAccount"
+    name: {{ printf "%s-%s" .Release.Namespace "serviceaccount" | quote }}
     namespace: {{ .Release.Namespace | quote }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: "ClusterRole"
   name: "system:image-puller"

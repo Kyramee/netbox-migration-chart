@@ -1,10 +1,10 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
+kind: "PersistentVolumeClaim"
+apiVersion: "v1"
 metadata:
-  name: netbox-migration
+  name: "netbox-migration"
   labels:
-    app: '{{ .Release.Namespace }}-netbox-migration'
-    housekeeping: {{ include "migration.housekeeping" . | quote}}
+    app: {{ printf "%s-%s" .Release.Namespace "netbox-migration" | quote }}
+    housekeeping: {{ include "migration.housekeeping" . | quote }}
 spec:
   accessModes:
     - {{ .Values.pvc.accessMode | quote }}
