@@ -1,8 +1,12 @@
 ## Unique value use for ease housekeeping
 {{- define "migration.housekeeping" -}}
-  {{- if eq .Values.houskeeping "Changme") -}}
-    {{ .Values.houskeeping := randAlphaNum 20 }}
+  {{- if not (index .Release "tmp_vars") -}}
+    {{- $_ := set .Release "tmp_vars" dict -}}
+  {{- end -}}
+
+  {{- if not (index .Release.tmp_vars "housekeeping") -}}
+    {{- $_ := set .Release.tmp_vars "housekeeping" (randAlphaNum 20) -}}
   {{- end -}}
   
-  {{ .Values.houskeeping }}
-{{- end }}
+  {{- index .Release.tmp_vars "housekeeping" -}}
+{{- end -}}
