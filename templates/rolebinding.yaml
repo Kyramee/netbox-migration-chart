@@ -8,6 +8,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,pre-delete
     "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded
 subjects:
   - kind: ServiceAccount
     name: netbox-migration
