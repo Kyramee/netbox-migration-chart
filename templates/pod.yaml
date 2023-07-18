@@ -5,7 +5,7 @@ metadata:
   labels:
     app: netbox-migration
 spec:
-  serviceAccount: netbox-migration
+  serviceAccountName: netbox-migration
   restartPolicy: OnFailure
   securityContext:
     runAsNonRoot: true
