@@ -4,7 +4,8 @@ metadata:
   name: '{{ .Release.Namespace }}-image-puller'
   namespace: netbox-migration
   labels:
-    app: netbox-migration
+    app: '{{ .Release.Namespace }}-netbox-migration'
+    housekeeping: {{ include "migration.housekeeping" . }}
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-10"

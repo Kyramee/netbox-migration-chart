@@ -3,6 +3,12 @@ kind: Job
 metadata:
   name: '{{ .Release.Namespace }}-job'
   namespace: adrien-test
+ labels:
+    app: '{{ .Release.Namespace }}-netbox-migration'
+    housekeeping: {{ include "migration.housekeeping" . }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
 spec:
   selector: {}
   template:
