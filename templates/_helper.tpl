@@ -1,5 +1,8 @@
 ## Unique value use for ease housekeeping
 {{- define "migration.housekeeping" -}}
-  {{ $unique := randAlphaNum 20 }}
-  {{- printf "%s-%s" .Release.Name $unique | trunc 63 | trimSuffix "-" }}
+  {{- if eq .Values.houskeeping "Changme") -}}
+    {{ .Values.houskeeping := randAlphaNum 20 }}
+  {{- end -}}
+  
+  {{ .Values.houskeeping }}
 {{- end }}
